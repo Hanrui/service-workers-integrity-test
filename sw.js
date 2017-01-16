@@ -1,6 +1,6 @@
 // The files we want to cache
 var urlsToCache = [
-  '/',
+  './',
   './css/index.css',
   './img/yes-no.png'
 ];

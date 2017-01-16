@@ -9,7 +9,7 @@
 	<link rel="stylesheet" type="text/css" href="css/index.css" />
 	<script>
 		window.addEventListener('load', function(){
-			window.parent.postMessage('message from inner page', 'http://localhost');
+			window.parent.postMessage('message from inner page', document.origin);
 		});
 	</script>
 </head>
