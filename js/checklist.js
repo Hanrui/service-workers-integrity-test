@@ -64,15 +64,17 @@ var checkList = [
     id: 't-caches-delete',
     title: 'caches.delete',
     score: 1
+  },
+  {
+    id: 't-cache-addAll',
+    title: 'cache.addAll',
+    score: 1
   }
 ];
 
 var currentScore = 0;
-function runTest(idx){
 
-}
-
-function runAllTests(){
+function generateListAndRun(){
   var totalScore = 0, htmlStr = '';
   for (var i = 0, len = checkList.length; i < len; i++) {
     totalScore += checkList[i].score;
@@ -130,13 +132,24 @@ function markTestResult(testId, isSupported){
   if (isSupported) {
     if (elLi.className != 'passed') {
       elLi.className = 'passed';
-      currentScore += 1;
+      console.log(elLi);
+      currentScore += parseInt(elLi.dataset.score);
       document.getElementsByClassName('big-score')[0].textContent = currentScore;
+    }
+    if (testId == 't-cache-addAll') {
+      // Trigger caches.match
+      var elIframe = document.createElement('iframe');
+      elIframe.src = "img/yes-no.png";
+      elIframe.addEventListener('load', function(){
+        markTestResult('t-respondWith', true);
+      })
+      document.body.appendChild(elIframe);
     }
   } else {
     elLi.className = 'failed';
   }
 }
+
 /*
 function checkMessagePassing(){
   var elIframe = document.createElement('iframe');
@@ -145,7 +158,8 @@ function checkMessagePassing(){
   window.addEventListener('message', onMessage, false);
 }
 */
-navigator.serviceWorker.addEventListener('message', function(event) {
+
+navigator.serviceWorker.addEventListener('message', function(event){
   var arr = event.data ? event.data.split(':') : [];
   console.log(arr);
   if (arr.length >= 2 && arr[0] == 'succ'){
@@ -154,18 +168,29 @@ navigator.serviceWorker.addEventListener('message', function(event) {
   }
   console.log(event);
 }, false);
+
 function checkServiceWorkerRegistration(){
-  navigator.serviceWorker.register('sw.js').then(function(registration) {
+  navigator.serviceWorker.register('sw.js')
+    .then(function(registration){
       // Registration succeeded.
       console.log('ServiceWorker registration successful with scope: ', registration.scope);
-      /*registration.unregister().then(function(){
-        console.log('ServiceWorker unregistration successful');
-        markTestResult('T-register', true);
-      });*/
-    }).catch(function(err) {
+      markTestResult('t-register', true);
+      window.setTimeout(function(){
+        registration.unregister()
+          .then(function(){
+            console.log('ServiceWorker unregistration successful');
+            markTestResult('t-unregister', true);
+          })
+          .catch(function(err){
+            // Unregistration failed.
+            console.log('ServiceWorker unregistration failed: ', err);
+          });
+      }, 1000);
+    })
+    .catch(function(err) {
       // Registration failed.
       console.log('ServiceWorker registration failed: ', err);
     });
 }
 
-runAllTests();
+generateListAndRun();
