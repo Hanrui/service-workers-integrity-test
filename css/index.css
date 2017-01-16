@@ -1,0 +1,150 @@
+html, body{
+	margin: 0;
+	padding: 0;
+	background: #e5e5e5;
+	font: normal 16px/1.5 Helvetica,Arial;
+}
+li{
+	list-style: none;
+}
+.head{
+	background: #57ba86;
+	color: #fff;
+	font-size: 24px;
+	height: 42px;
+	line-height: 42px;
+	text-align: center;
+	margin: 0;
+}
+.main{
+	padding: 20px;
+}
+.tab-panel{
+	height: 36px;
+	margin-bottom: 20px;
+}
+.tabs{
+	height: 36px;
+	overflow: hidden;
+}
+.tab{
+	width: 50%;
+	height: 36px;
+	box-sizing: border-box;
+	background: #fff;
+	border: 1px solid #f7f7f7;
+	color: #b8bcb8;
+	cursor: pointer;
+	float: left;
+	text-align: center;
+	line-height: 34px;
+	user-select: none;
+}
+.tab.current{
+	border-color: #83e3b1;
+	color: #83e3b1;
+}
+.clearfix::after{
+	content: ' ';
+	height: 0;
+	display: block;
+	clear: both;
+	overflow: hidden;
+	visibility: none;
+}
+.score-panel, .ua-panel, .check-list-panel{
+	background: #fff;
+}
+.score-panel{
+	text-align: center;
+}
+.jagged-line-footer{
+	margin-bottom: 30px;
+	padding-bottom: 12px;
+	position: relative;
+}
+.jagged-line-footer::after{
+	content: " ";
+	display: block;
+	width: 100%;
+	height: 12px;
+	position: absolute;
+	bottom: -10px;
+	background: url("../img/jagged-line.png") repeat-x bottom center;
+}
+.big-score{
+	color: #57ba86;
+	font-size: 120px;
+	line-height: 140px;
+}
+.ua-panel{
+	margin-bottom: 20px;
+	padding: 10px;
+}
+.ua-panel .btns{
+	height: 24px;
+	text-align: right;
+}
+.ua-panel button{
+	padding: 0 5px;
+	margin-left: 5px;
+	border: 0;
+	height: 100%;
+	background: none;
+	color: #57ba86;
+	font-size: 14px;
+	line-height: 24px;
+}
+.title{
+	background: #83e3b1;
+	height: 24px;
+	font-size: 18px;
+	line-height: 24px;
+	padding: 6px 10px;
+	text-align: left;
+	color: #95989a;
+}
+.icon{
+	width: 24px;
+	height: 24px;
+	vertical-align: middle;
+}
+.title .icon{
+	margin-right: 4px;
+}
+#check-list{
+	margin: 0;
+	padding: 10px;
+}
+.check-point, .comment-field{
+	padding-right: 30px;
+}
+.check-point{
+	position: relative;
+	margin-top: 12px;
+}
+.comment-field{
+	color: #777;
+	font-size: 12px;
+	margin-top: 6px;
+}
+.check-point .check-status{
+	position: absolute;
+	right: 0;
+	top: 50%;
+	width: 24px;
+	height: 24px;
+	margin-top: -12px;
+}
+.passed .check-point .check-status{
+	background: url("../img/yes-no.png") no-repeat center top;
+}
+.failed .check-point .check-status{
+	background: url("../img/yes-no.png") no-repeat center -50px;
+}
+iframe{
+	display: block;
+	visibility: hidden;
+	height: 0;
+	overflow: hidden;
+}
