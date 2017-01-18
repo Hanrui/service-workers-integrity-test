@@ -2,7 +2,8 @@
 var urlsToCache = [
   './',
   './css/index.css',
-  './img/yes-no.png'
+  './img/yes-no.png',
+  './js/checklist.js'
 ];
 var CACHE_NAME = 'service-workers-integrity-test-v1';
 
