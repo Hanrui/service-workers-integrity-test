@@ -158,6 +158,8 @@ function checkMessagePassing(){
   window.addEventListener('message', onMessage, false);
 }
 */
+
+if (navigator.serviceWorker) {
   navigator.serviceWorker.addEventListener('message', function(event){
     console.log(event.data);
     var arr = event.data ? event.data.split(':') : [];
@@ -166,6 +168,7 @@ function checkMessagePassing(){
       markTestResult(strId, true);
     }
   }, false);
+}
 
 function checkServiceWorkerRegistration(){
   navigator.serviceWorker.register('sw.js')
