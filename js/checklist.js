@@ -158,17 +158,14 @@ function checkMessagePassing(){
   window.addEventListener('message', onMessage, false);
 }
 */
-if（navigator.serviceWorker) {
   navigator.serviceWorker.addEventListener('message', function(event){
+    console.log(event.data);
     var arr = event.data ? event.data.split(':') : [];
-    console.log(arr);
     if (arr.length >= 2 && arr[0] == 'succ'){
       var strId = event.data.replace('succ:', 't-').replace(':', '-');
       markTestResult(strId, true);
     }
-    console.log(event);
   }, false);
-}
 
 function checkServiceWorkerRegistration(){
   navigator.serviceWorker.register('sw.js')
@@ -186,7 +183,7 @@ function checkServiceWorkerRegistration(){
             // Unregistration failed.
             console.log('ServiceWorker unregistration failed: ', err);
           });
-      }, 1000);
+      }, 2000);
     })
     .catch(function(err) {
       // Registration failed.
