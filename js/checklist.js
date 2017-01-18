@@ -158,16 +158,17 @@ function checkMessagePassing(){
   window.addEventListener('message', onMessage, false);
 }
 */
-
-navigator.serviceWorker.addEventListener('message', function(event){
-  var arr = event.data ? event.data.split(':') : [];
-  console.log(arr);
-  if (arr.length >= 2 && arr[0] == 'succ'){
-    var strId = event.data.replace('succ:', 't-').replace(':', '-');
-    markTestResult(strId, true);
-  }
-  console.log(event);
-}, false);
+if（navigator.serviceWorker) {
+  navigator.serviceWorker.addEventListener('message', function(event){
+    var arr = event.data ? event.data.split(':') : [];
+    console.log(arr);
+    if (arr.length >= 2 && arr[0] == 'succ'){
+      var strId = event.data.replace('succ:', 't-').replace(':', '-');
+      markTestResult(strId, true);
+    }
+    console.log(event);
+  }, false);
+}
 
 function checkServiceWorkerRegistration(){
   navigator.serviceWorker.register('sw.js')
