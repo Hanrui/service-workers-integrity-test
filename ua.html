@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<head>
+	<title>UA Test</title>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=EDGE">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<style>
+		div{
+			border: 1px solid black;
+			margin: 10px auto;
+			max-width: 400px;
+			padding: 10px;
+		}
+	</style>
+	<script>
+		(function(){var p=[],w=window,d=document,e=f=0;p.push('ua='+encodeURIComponent(navigator.userAgent));e|=w.ActiveXObject?1:0;e|=w.opera?2:0;e|=w.chrome?4:0;
+		e|='getBoxObjectFor' in d || 'mozInnerScreenX' in w?8:0;e|=('WebKitCSSMatrix' in w||'WebKitPoint' in w||'webkitStorageInfo' in w||'webkitURL' in w)?16:0;
+		e|=(e&16&&({}.toString).toString().indexOf("\n")===-1)?32:0;p.push('e='+e);f|='sandbox' in d.createElement('iframe')?1:0;f|='WebSocket' in w?2:0;
+		f|=w.Worker?4:0;f|=w.applicationCache?8:0;f|=w.history && history.pushState?16:0;f|=d.documentElement.webkitRequestFullScreen?32:0;f|='FileReader' in w?64:0;
+		p.push('f='+f);p.push('r='+Math.random().toString(36).substring(7));p.push('w='+screen.width);p.push('h='+screen.height);var s=d.createElement('script');
+		s.src='https://api.whichbrowser.net/rel/detect.js?' + p.join('&');d.getElementsByTagName('head')[0].appendChild(s);})();
+	</script>
+</head>
+<body>
+	<div id="ua-string">
+	</div>
+	<div id="raw-ua-string">
+	</div>
+	<script>
+		function waitForWhichBrowser(cb) {
+			var callback = cb;
+			function wait() {
+				if (typeof WhichBrowser == 'undefined') {
+					window.setTimeout(wait, 100);
+				} else {
+					callback();
+				} 
+			}
+			wait();
+		}
+
+		waitForWhichBrowser(function() {
+			var o = document.getElementById('ua-string');
+			try {
+				Browsers = new WhichBrowser({
+					useFeatures:		true,
+					detectCamouflage:	true
+				});
+				o.innerHTML = 'You are using ' + Browsers; //'<br><code>' + navigator.userAgent + '</code>';
+			} catch (e) {
+				o.innerHTML = 'Oops, something went wrong:<br> <small>' + e + '</small>';
+			}
+		});
+		document.getElementById('raw-ua-string').innerHTML = navigator.userAgent;
+	</script>
+</body>
