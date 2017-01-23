@@ -7,11 +7,22 @@
 	<meta name="apple-mobile-web-app-status-bar-style" content="black">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<style>
-		div{
-			border: 1px solid black;
-			margin: 10px auto;
+		.wrap{
 			max-width: 400px;
+			margin: 0 auto;
+		}
+		.result{
+			border: 1px solid black;
+			margin-top: 10px;
 			padding: 10px;
+		}
+		.comment{
+			margin-top: 5px;
+			margin-bottom: 20px;
+			color: #777;
+		}
+		.comment a{
+			color: #777;
 		}
 	</style>
 	<script>
@@ -24,9 +35,14 @@
 	</script>
 </head>
 <body>
-	<div id="ua-string">
-	</div>
-	<div id="raw-ua-string">
+	<div class="wrap">
+		<div id="ua-string" class="result">
+		</div>
+		<div class="comment">
+			* result from <a href="http://whichbrowser.net/">WhichBrowser</a>
+		</div>
+		<div id="raw-ua-string" class="result">
+		</div>
 	</div>
 	<script>
 		function waitForWhichBrowser(cb) {
