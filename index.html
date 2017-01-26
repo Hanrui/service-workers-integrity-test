@@ -1,80 +1,90 @@
 <!DOCTYPE html>
 <head>
-	<title>Service Workers Integrity Test - How well does your browser support SW?</title>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=EDGE">
-	<meta name="apple-mobile-web-app-capable" content="yes">
-	<meta name="apple-mobile-web-app-status-bar-style" content="black">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" type="text/css" href="css/index.css" />
-	<script>
-		(function(){var p=[],w=window,d=document,e=f=0;p.push('ua='+encodeURIComponent(navigator.userAgent));e|=w.ActiveXObject?1:0;e|=w.opera?2:0;e|=w.chrome?4:0;
-		e|='getBoxObjectFor' in d || 'mozInnerScreenX' in w?8:0;e|=('WebKitCSSMatrix' in w||'WebKitPoint' in w||'webkitStorageInfo' in w||'webkitURL' in w)?16:0;
-		e|=(e&16&&({}.toString).toString().indexOf("\n")===-1)?32:0;p.push('e='+e);f|='sandbox' in d.createElement('iframe')?1:0;f|='WebSocket' in w?2:0;
-		f|=w.Worker?4:0;f|=w.applicationCache?8:0;f|=w.history && history.pushState?16:0;f|=d.documentElement.webkitRequestFullScreen?32:0;f|='FileReader' in w?64:0;
-		p.push('f='+f);p.push('r='+Math.random().toString(36).substring(7));p.push('w='+screen.width);p.push('h='+screen.height);var s=d.createElement('script');
-		s.src='https://api.whichbrowser.net/rel/detect.js?' + p.join('&');d.getElementsByTagName('head')[0].appendChild(s);})();
-	</script>
+  <title>Service Workers Integrity Test - How well does your browser support SW?</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=EDGE">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="css/index.css" />
+  <script>
+    (function(){var p=[],w=window,d=document,e=f=0;p.push('ua='+encodeURIComponent(navigator.userAgent));e|=w.ActiveXObject?1:0;e|=w.opera?2:0;e|=w.chrome?4:0;
+    e|='getBoxObjectFor' in d || 'mozInnerScreenX' in w?8:0;e|=('WebKitCSSMatrix' in w||'WebKitPoint' in w||'webkitStorageInfo' in w||'webkitURL' in w)?16:0;
+    e|=(e&16&&({}.toString).toString().indexOf("\n")===-1)?32:0;p.push('e='+e);f|='sandbox' in d.createElement('iframe')?1:0;f|='WebSocket' in w?2:0;
+    f|=w.Worker?4:0;f|=w.applicationCache?8:0;f|=w.history && history.pushState?16:0;f|=d.documentElement.webkitRequestFullScreen?32:0;f|='FileReader' in w?64:0;
+    p.push('f='+f);p.push('r='+Math.random().toString(36).substring(7));p.push('w='+screen.width);p.push('h='+screen.height);var s=d.createElement('script');
+    s.src='https://api.whichbrowser.net/rel/detect.js?' + p.join('&');d.getElementsByTagName('head')[0].appendChild(s);})();
+  </script>
 </head>
 <body>
-	<div class="wrap">
-		<h1 class="head">
-			Service Workers Integrity Test
-		</h1>
-		<div class="main">
-			<div class="tab-panel">
-				<span class="tabs clearfix">
-					<div class="tab current">Your browser</div>
-					<div class="tab">Others</div>
-				</span>
-			</div>
-			<div class="score-panel jagged-line-footer">
-				<div class="title">Your browser scores</div>
-				<div class="big-score"></div>
-				<div class="small-score">
-					out of <span class="total-score"></span> points
-				</div>
-			</div>
-			<div class="ua-panel">
-				<div id="ua-string"></div>
-				<div class="btns">
-					Correct?
-					<button class="btn-yes">yes</button>
-					<button class="btn-no">no</button>
-				</div>
-			</div>
-			<div class="check-list-panel jagged-line-footer">
-				<div class="title"><img class="icon" src="img/tag.png">Check list</div>
-				<ul id="check-list">
-				</ul>
-			</div>
-		</div>
-	</div>
-	<script>
-		function waitForWhichBrowser(cb) {
-			var callback = cb;
-			function wait() {
-				if (typeof WhichBrowser == 'undefined') {
-					window.setTimeout(wait, 100);
-				} else {
-					callback();
-				} 
-			}
-			wait();
-		}
+  <div class="wrap">
+    <h1 class="head">
+      Service Workers Integrity Test
+    </h1>
+    <div class="main">
+      <div class="tab-panel">
+        <span class="tabs clearfix">
+          <div class="tab current">Your browser</div>
+          <div class="tab">Others</div>
+        </span>
+      </div>
+      <div class="score-panel jagged-line-footer">
+        <div class="title">Your browser scores</div>
+        <div class="big-score"></div>
+        <div class="small-score">
+          out of <span class="total-score"></span> points
+        </div>
+      </div>
+      <div class="ua-panel">
+        <div id="ua-string"></div>
+        <div class="btns">
+          Correct?
+          <button class="btn-yes">yes</button>
+          <button class="btn-no">no</button>
+        </div>
+      </div>
+      <div class="check-list-panel jagged-line-footer">
+        <div class="title"><img class="icon" src="img/tag.png">Check list</div>
+        <ul id="check-list">
+        </ul>
+      </div>
+    </div>
+  </div>
+  <script>
+    function waitForWhichBrowser(cb) {
+      var callback = cb;
+      function wait() {
+        if (typeof WhichBrowser == 'undefined') {
+          window.setTimeout(wait, 100);
+        } else {
+          callback();
+        } 
+      }
+      wait();
+    }
 
-		waitForWhichBrowser(function() {
-			var o = document.getElementById('ua-string');
-			try {
-				Browsers = new WhichBrowser({
-					useFeatures:		true,
-					detectCamouflage:	true
-				});
-				o.innerHTML = 'You are using ' + Browsers; //'<br><code>' + navigator.userAgent + '</code>';
-			} catch (e) {
-				o.innerHTML = 'Oops, something went wrong:<br> <small>' + e + '</small>';
-			}
-		});
-	</script>
-	<script src="js/checklist.js"></script>
+    waitForWhichBrowser(function() {
+      var o = document.getElementById('ua-string');
+      try {
+        Browsers = new WhichBrowser({
+          useFeatures:    true,
+          detectCamouflage: true
+        });
+        o.innerHTML = 'You are using ' + Browsers; //'<br><code>' + navigator.userAgent + '</code>';
+      } catch (e) {
+        o.innerHTML = 'Oops, something went wrong:<br> <small>' + e + '</small>';
+      }
+    });
+  </script>
+  <script src="js/checklist.js"></script>
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-27539055-3', 'auto');
+    ga('send', 'pageview');
+
+  </script>
 </body>

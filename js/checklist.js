@@ -89,7 +89,18 @@ function generateListAndRun(){
   document.getElementsByClassName('total-score')[0].textContent = totalScore;
   document.getElementById('check-list').innerHTML = htmlStr;
 
+  if (checkServiceWorkerInterface()) {
+    markTestResult('t-interface', true);
+  }
+
   var ret = checkPromiseSupport();
+  if (typeof ret == 'object' && typeof ret.then == 'function') {
+    ret.then(function(){
+      markTestResult('t-promise', true);
+      removeRegisteredServiceWorkers();
+    });    
+  }
+/*
   if (typeof ret == 'boolean') {
     if (ret) {
       markTestResult('t-promise', true);
@@ -104,6 +115,7 @@ function generateListAndRun(){
   if (checkServiceWorkerInterface()) {
     markTestResult('t-interface', true);
   }
+*/
 }
 
 function checkPromiseSupport(){
@@ -111,9 +123,7 @@ function checkPromiseSupport(){
     typeof Promise.resolve == 'function' &&
     typeof Promise.reject == 'function') {
     return new Promise(function(resolve, reject){
-      window.setTimeout(function(){
-        resolve('Promise supported!');
-      }, 1);
+      resolve('Promise supported!');
     });
   } else {
     return false;
@@ -168,6 +178,25 @@ if (navigator.serviceWorker) {
       markTestResult(strId, true);
     }
   }, false);
+}
+
+function removeRegisteredServiceWorkers(){
+  if (navigator.serviceWorker && navigator.serviceWorker.getRegistrations) {
+    navigator.serviceWorker.getRegistrations().then(function(registrations) {
+      var len = registrations.length;
+      console.log('Got ' + len + 'serviceWorkers!');
+      try {
+        for (var i = 0; i < len; i++) {
+          registration[i].unregister();
+        }
+      } catch (e) {
+        console.log(e);
+      }
+      checkServiceWorkerRegistration();
+    })
+  } else {
+    checkServiceWorkerRegistration();
+  }
 }
 
 function checkServiceWorkerRegistration(){
