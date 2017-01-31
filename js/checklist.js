@@ -184,7 +184,7 @@ function removeRegisteredServiceWorkers(){
   if (navigator.serviceWorker && navigator.serviceWorker.getRegistrations) {
     navigator.serviceWorker.getRegistrations().then(function(registrations) {
       var len = registrations.length;
-      console.log('Got ' + len + 'serviceWorkers!');
+      console.log('Got ' + len + ' registered serviceWorkers! And I am going to remove them...');
       try {
         for (var i = 0; i < len; i++) {
           registration[i].unregister();
