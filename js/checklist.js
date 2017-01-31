@@ -169,17 +169,6 @@ function checkMessagePassing(){
 }
 */
 
-if (navigator.serviceWorker) {
-  navigator.serviceWorker.addEventListener('message', function(event){
-    console.log(event.data);
-    var arr = event.data ? event.data.split(':') : [];
-    if (arr.length >= 2 && arr[0] == 'succ'){
-      var strId = event.data.replace('succ:', 't-').replace(':', '-');
-      markTestResult(strId, true);
-    }
-  }, false);
-}
-
 function removeRegisteredServiceWorkers(){
   if (navigator.serviceWorker && navigator.serviceWorker.getRegistrations) {
     navigator.serviceWorker.getRegistrations().then(function(registrations) {
@@ -200,27 +189,37 @@ function removeRegisteredServiceWorkers(){
 }
 
 function checkServiceWorkerRegistration(){
-  navigator.serviceWorker.register('sw.js')
-    .then(function(registration){
-      // Registration succeeded.
-      console.log('ServiceWorker registration successful with scope: ', registration.scope);
-      markTestResult('t-register', true);
-      window.setTimeout(function(){
-        registration.unregister()
-          .then(function(){
-            console.log('ServiceWorker unregistration successful');
-            markTestResult('t-unregister', true);
-          })
-          .catch(function(err){
-            // Unregistration failed.
-            console.log('ServiceWorker unregistration failed: ', err);
-          });
-      }, 2000);
-    })
-    .catch(function(err) {
-      // Registration failed.
-      console.log('ServiceWorker registration failed: ', err);
-    });
+  if (navigator.serviceWorker) {
+    navigator.serviceWorker.addEventListener('message', function(event){
+      console.log(event.data);
+      var arr = event.data ? event.data.split(':') : [];
+      if (arr.length >= 2 && arr[0] == 'succ'){
+        var strId = event.data.replace('succ:', 't-').replace(':', '-');
+        markTestResult(strId, true);
+      }
+    }, false);
+    navigator.serviceWorker.register('sw.js')
+      .then(function(registration){
+        // Registration succeeded.
+        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+        markTestResult('t-register', true);
+        window.setTimeout(function(){
+          registration.unregister()
+            .then(function(){
+              console.log('ServiceWorker unregistration successful');
+              markTestResult('t-unregister', true);
+            })
+            .catch(function(err){
+              // Unregistration failed.
+              console.log('ServiceWorker unregistration failed: ', err);
+            });
+        }, 2000);
+      })
+      .catch(function(err) {
+        // Registration failed.
+        console.log('ServiceWorker registration failed: ', err);
+      });
+  }
 }
 
 generateListAndRun();
