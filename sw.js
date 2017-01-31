@@ -21,7 +21,9 @@ function postMessageToWindows(msg){
   }
 }
 
-postMessageToWindows('succ:message');
+setTimeout(function(){
+  postMessageToWindows('succ:message');
+}, 1);
 
 // Set the callback for the install step
 self.addEventListener('install', function(event){
